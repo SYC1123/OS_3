@@ -8,4 +8,8 @@ public class User extends BmobUser {
     public void setFlag(int flag) {
         this.flag = flag;
     }
+
+    public int getFlag() {
+        return flag;
+    }
 }
