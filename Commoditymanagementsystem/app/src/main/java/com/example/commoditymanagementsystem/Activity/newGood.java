@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.commoditymanagementsystem.R;
 import com.example.commoditymanagementsystem.model.Bmob.Good;
+import com.example.commoditymanagementsystem.model.Bmob.Statement;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -46,7 +47,7 @@ public class newGood extends AppCompatActivity {
                     });
                     dia.show();
                 }else{
-                    Good good = new Good();
+                    final Good good = new Good();
                     good.setName(mName.getText().toString());
                     good.setLocation(mLocation.getText().toString());
                     good.setCategory(mCategory.getText().toString());
@@ -57,6 +58,17 @@ public class newGood extends AppCompatActivity {
                         public void done(String s, BmobException e) {
                             if(e==null){
                                 Toast.makeText(newGood.this, "更新成功！", Toast.LENGTH_SHORT).show();
+                                Statement statement=new Statement();
+                                statement.setName(good.getName());
+                                statement.setPrice(good.getUnit_price());
+                                statement.setNum(good.getNum());
+                                statement.setState("采购");
+                                statement.save(new SaveListener<String>() {
+                                    @Override
+                                    public void done(String s, BmobException e) {
+
+                                    }
+                                });
                             }
                         }
                     });

@@ -15,10 +15,12 @@ import android.widget.EditText;
 
 import com.example.commoditymanagementsystem.Activity.ChangeMessage;
 import com.example.commoditymanagementsystem.Activity.ItemManager;
+import com.example.commoditymanagementsystem.Activity.LookStatement;
 import com.example.commoditymanagementsystem.Activity.newGood;
 import com.example.commoditymanagementsystem.Activity.oldGood;
 import com.example.commoditymanagementsystem.R;
 import com.example.commoditymanagementsystem.model.Bmob.Good;
+import com.example.commoditymanagementsystem.model.Bmob.User;
 
 import java.util.List;
 
@@ -90,6 +92,39 @@ public class GoodManager extends Fragment {
             }
         });
 
+        Button button = view.findViewById(R.id.Lookstatement);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (BmobUser.isLogin()) {
+                    User user = BmobUser.getCurrentUser(User.class);
+                    if (user.getFlag() == 2) {
+                        Intent intent = new Intent(getActivity(), LookStatement.class);
+                        startActivity(intent);
+                    }else{
+                        AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
+                        dia.setTitle("无权限！");
+                        dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Toast.makeText(MainActivity.this, which+"确定", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        dia.show();
+                    }
+                }else {
+                    AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
+                    dia.setTitle("无权限！");
+                    dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Toast.makeText(MainActivity.this, which+"确定", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dia.show();
+                }
+            }
+        });
         return view;
     }
 }

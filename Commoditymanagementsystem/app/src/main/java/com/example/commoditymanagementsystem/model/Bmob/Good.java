@@ -1,8 +1,10 @@
 package com.example.commoditymanagementsystem.model.Bmob;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
-public class Good extends BmobObject {
+public class Good extends BmobObject implements Serializable {
     private String name;//商品名称
     private String category;//商品类别
     private int num;//商品数量

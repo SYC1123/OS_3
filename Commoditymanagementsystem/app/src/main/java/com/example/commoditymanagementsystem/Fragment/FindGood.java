@@ -1,10 +1,13 @@
 package com.example.commoditymanagementsystem.Fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.commoditymanagementsystem.Activity.salegood;
 import com.example.commoditymanagementsystem.GoodAdapter;
 import com.example.commoditymanagementsystem.R;
 import com.example.commoditymanagementsystem.model.Bmob.Good;
@@ -41,36 +44,53 @@ public class FindGood extends Fragment {
                 if (e == null) {
                     Log.d("aaaa", "done: ");
                     list = categories;
-                   // Toast.makeText(getContext(), ""+list.size(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), ""+list.size(), Toast.LENGTH_SHORT).show();
                     GoodAdapter adapter = new GoodAdapter(getContext(), R.layout.good_item, list);
                     listView.setAdapter(adapter);
                 } else {
-                    Log.d("error", "done: "+e.toString());
+                    Log.d("error", "done: " + e.toString());
                 }
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Good good=list.get(position);
-                AlertDialog.Builder dia = new AlertDialog.Builder(getContext());
-                dia.setTitle("商品信息");
-                dia.setMessage(good.getName()+"\n"
-                +"类别："+good.getCategory()+"\n"
-                +"位置："+good.getLocation()+"\n"
-                +"库存："+good.getNum()+"\n"
-                +"价格："+good.getUnit_price()+"元");
-                // dia.setCancelable(false);
-                dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(MainActivity.this, which+"确定", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                dia.show();
+                Intent intent = getActivity().getIntent();
+                String s = intent.getStringExtra("type");
+                // Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                Good good = list.get(position);
+                if (s.equals("saleman")) {
+                    Intent intent1 = new Intent(getContext(), salegood.class);
+                    intent1.putExtra("good",good);
+                    startActivity(intent1);
+                } else {
+                    AlertDialog.Builder dia = new AlertDialog.Builder(getContext());
+                    dia.setTitle("商品信息");
+                    dia.setMessage(good.getName() + "\n"
+                            + "类别：" + good.getCategory() + "\n"
+                            + "位置：" + good.getLocation() + "\n"
+                            + "库存：" + good.getNum() + "\n"
+                            + "价格：" + good.getUnit_price() + "元");
+                    // dia.setCancelable(false);
+                    dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Toast.makeText(MainActivity.this, which+"确定", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dia.show();
+                }
 
             }
         });
         return view;
     }
+
+    private void replacefragment(Fragment fragment, int layout) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(layout, fragment);
+        transaction.commit();
+    }
+
 }
