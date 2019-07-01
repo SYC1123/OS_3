@@ -62,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="请先查找商品"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -93,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="请先查找商品"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -124,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="请先查找商品"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -155,7 +158,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:hint="请先查找商品"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -185,7 +189,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:hint="请先查找商品"
+            android:inputType="number" />
     </LinearLayout>
 
     <Button

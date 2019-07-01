@@ -61,9 +61,9 @@ public class GoodManager extends Fragment {
         getGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (inputGood.getText().toString().equals("")) {
+                if (BmobUser.isLogin()) {
                     AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
-                    dia.setTitle("请输入信息！");
+                    dia.setTitle("无权限进货！");
                     dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -72,22 +72,34 @@ public class GoodManager extends Fragment {
                     });
                     dia.show();
                 } else {
-                    BmobQuery<Good> categoryBmobQuery = new BmobQuery<>();
-                    categoryBmobQuery.addWhereEqualTo("name", inputGood.getText().toString());
-                    categoryBmobQuery.findObjects(new FindListener<Good>() {
-                        @Override
-                        public void done(List<Good> object, BmobException e) {
-                            if (e == null) {
-                                Intent intent = new Intent(getActivity(), oldGood.class);
-                                intent.putExtra("objectId", object.get(0).getObjectId());
-                                intent.putExtra("num", object.get(0).getNum() + "");
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(getActivity(), newGood.class);
-                                startActivity(intent);
+                    if (inputGood.getText().toString().equals("")) {
+                        AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
+                        dia.setTitle("请输入信息！");
+                        dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Toast.makeText(MainActivity.this, which+"确定", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
+                        });
+                        dia.show();
+                    } else {
+                        BmobQuery<Good> categoryBmobQuery = new BmobQuery<>();
+                        categoryBmobQuery.addWhereEqualTo("name", inputGood.getText().toString());
+                        categoryBmobQuery.findObjects(new FindListener<Good>() {
+                            @Override
+                            public void done(List<Good> object, BmobException e) {
+                                if (e == null) {
+                                    Intent intent = new Intent(getActivity(), oldGood.class);
+                                    intent.putExtra("objectId", object.get(0).getObjectId());
+                                    intent.putExtra("num", object.get(0).getNum() + "");
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(getActivity(), newGood.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -98,10 +110,10 @@ public class GoodManager extends Fragment {
             public void onClick(View v) {
                 if (BmobUser.isLogin()) {
                     User user = BmobUser.getCurrentUser(User.class);
-                    if (user.getFlag() == 2) {
+                    if (user.getFlag() == 1) {
                         Intent intent = new Intent(getActivity(), LookStatement.class);
                         startActivity(intent);
-                    }else{
+                    } else {
                         AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
                         dia.setTitle("无权限！");
                         dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -112,7 +124,7 @@ public class GoodManager extends Fragment {
                         });
                         dia.show();
                     }
-                }else {
+                } else {
                     AlertDialog.Builder dia = new AlertDialog.Builder(getActivity());
                     dia.setTitle("无权限！");
                     dia.setPositiveButton("确定", new DialogInterface.OnClickListener() {

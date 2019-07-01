@@ -35,6 +35,7 @@ public class ChangeMessage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_message);
         bindViews();
+        mChange.setEnabled(false);
         mFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +50,7 @@ public class ChangeMessage extends AppCompatActivity {
                     });
                     dia.show();
                 }else{
+                    mChange.setEnabled(true);
                     BmobQuery<Good> categoryBmobQuery = new BmobQuery<>();
                     categoryBmobQuery.addWhereEqualTo("name", mEditText.getText().toString());
                     categoryBmobQuery.findObjects(new FindListener<Good>() {

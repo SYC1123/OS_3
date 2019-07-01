@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="数量"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
     </LinearLayout>
 
     <Button
